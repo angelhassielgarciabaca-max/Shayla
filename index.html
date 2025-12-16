@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA HACKER - ACCESO RESTRINGIDO</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 2s ease;
+        }
+
+        /* Estilos de la Terminal */
+        #terminal {
+            width: 90%;
+            max-width: 700px;
+            padding: 20px;
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 15px #00ff00;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .linea {
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #00ff00;
+            animation: parpadeo 0.6s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes parpadeo { 50% { opacity: 0; } }
+
+        /* Estilos de la Sorpresa Final */
+        #sorpresa {
+            display: none;
+            text-align: center;
+            color: white;
+            animation: entrada 1.5s ease-out;
+        }
+
+        @keyframes entrada {
+            from { opacity: 0; transform: scale(0.3); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .corazon {
+            color: #ff0000;
+            font-size: 120px;
+            filter: drop-shadow(0 0 20px #ff0000);
+            animation: latido 0.8s infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes latido {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.25); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+
+        .nombre {
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            margin-bottom: 10px;
+        }
+
+        .texto-final {
+            font-size: 1.5rem;
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="terminal">
+        <div id="log"></div>
+        <div class="linea">
+            <span id="actual"></span><span class="cursor"></span>
+        </div>
+    </div>
+
+    <div id="sorpresa">
+        <div class="corazon">❤️</div>
+        <h1 class="nombre">¡FELICES 21, SHAYLA!</h1>
+        <p class="texto-final">Te amo y te quiero mucho</p>
+        <p style="margin-top: 15px; color: #aaa;">✨ Eres la mejor prima del mundo ✨</p>
+    </div>
+
+    <script>
+        const log = document.getElementById('log');
+        const actual = document.getElementById('actual');
+        const terminal = document.getElementById('terminal');
+        const sorpresa = document.getElementById('sorpresa');
+
+        const comandos = [
+            "> Iniciando Protocolo_Troya.sh...",
+            "> Conectando a servidores de red remota...",
+            "> Forzando entrada en puerto 8080...",
+            "> Bypass Firewall de seguridad... [OK]",
+            "> Buscando información confidencial de 'SHAYLA'...",
+            "> ARCHIVOS ENCONTRADOS: 21_años_de_magia.dat",
+            "> Descifrando mensaje oculto...",
+            "> Cargando sorpresa final...",
+            "SISTEMA HACKEADO CON ÉXITO.",
+            "3...", "2...", "1..."
+        ];
+
+        let indexComando = 0;
+
+        function escribirComando() {
+            if (indexComando < comandos.length) {
+                let texto = comandos[indexComando];
+                let i = 0;
+                actual.textContent = "";
+                
+                let intervaloLetra = setInterval(() => {
+                    actual.textContent += texto[i];
+                    i++;
+                    if (i === texto.length) {
+                        clearInterval(intervaloLetra);
+                        setTimeout(() => {
+                            const p = document.createElement('div');
+                            p.className = 'linea';
+                            p.textContent = texto;
+                            log.appendChild(p);
+                            actual.textContent = "";
+                            indexComando++;
+                            escribirComando();
+                        }, 500);
+                    }
+                }, 40);
+            } else {
+                mostrarSorpresa();
+            }
+        }
+
+        function mostrarSorpresa() {
+            setTimeout(() => {
+                terminal.style.display = 'none';
+                document.body.style.backgroundColor = "#1a0000";
+                sorpresa.style.display = 'block';
+                
+                // Lanzar confeti varias veces
+                var duracion = 5 * 1000;
+                var animacionEnd = Date.now() + duracion;
+
+                var intervaloConfeti = setInterval(function() {
+                    var tiempoRestante = animacionEnd - Date.now();
+
+                    if (tiempoRestante <= 0) {
+                        return clearInterval(intervaloConfeti);
+                    }
+
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#ff0000', '#ffffff', '#ffd700']
+                    });
+                }, 250);
+            }, 1000);
+        }
+
+        // Arrancar el efecto
+        window.onload = escribirComando;
+    </script>
+</body>
+</html>
